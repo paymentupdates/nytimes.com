@@ -1,157 +1,156 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>The New York Times – Actualizar método de pago</title>
-  <link href="https://fonts.googleapis.com/css2?family=Libertine:wght@400;700&family=Helvetica:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The New York Times Digital Subscription — $14.99/year</title>
+  
+  <!-- Google Fonts (serif + sans) for professional look -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Helvetica', sans-serif;
-      background: #fafafa;
-      color: #111;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      background-color: #fff; /* white background */
+      color: #000;            /* black text */
+      font-family: 'Work Sans', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
     }
-    header {
-      height: 80px;
-      text-align: center;
-      background: #fff;
-      border-bottom: 1px solid #e0e0e0;
+    a {
+      color: #000;
+      text-decoration: none;
     }
-    header img {
-      margin:-20px;
-      height: 120px;
-      width: 250px;
+    a:hover {
+      text-decoration: underline;
     }
-    main {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
       padding: 40px 20px;
     }
-    .box {
-      background: #fff;
-      padding: 32px;
-      border: 1px solid #e0e0e0;
-      border-radius: 4px;
-      max-width: 420px;
-      width: 100%;
+    header {
       text-align: center;
+      margin-bottom: 40px;
     }
-    p {
-      font-family: arial;
-      font-size: 24px;
-      margin-bottom: 24px;
+    header h1 {
+      font-family: 'Merriweather', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
     }
-    .current-card {
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      padding: 16px;
-      text-align: left;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
+    header p.subtitle {
+      font-size: 1.25rem;
+      color: #444; /* slightly lighter than pure black for contrast */
     }
-    .current-card img {
-      height: 24px;
-      margin-right: 12px;
+    .offer-box {
+      border: 2px solid #000;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 30px;
     }
-    .current-card .text {
-      font-size: 14px;
+    .offer-box .price {
+      font-family: 'Merriweather', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .offer-box .details {
+      font-size: 1rem;
+      color: #333;
+      margin-bottom: 20px;
     }
     .btn {
-      display: block;
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 16px;
-      font-size: 16px;
-      font-weight: bold;
-      background: #fff;
-      color: #111;
-      border: 1px solid #111;
-      border-radius: 2px;
+      display: inline-block;
+      padding: 14px 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      background-color: #000;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background .2s, color .2s;
     }
     .btn:hover {
-      background: #111;
-      color: #fff;
+      background-color: #333;
     }
-    .btn.paypal {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #fff;
-      border: 1px solid #ccc;
-    }
-    .btn.paypal img {
-      height: 24px;
-    }
-    .secure {
-      margin-top: 24px;
-      font-size: 14px;
-      color: #2a7b2a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .secure img {
-      height: 16px;
-      margin-right: 8px;
+    .disclosure {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 20px;
     }
     footer {
-      padding: 16px 0;
       text-align: center;
-      font-size: 12px;
-      color: #666;
-      background: #fff;
-      border-top: 1px solid #e0e0e0;
-    }
-    footer a {
-      color: #111;
-      text-decoration: underline;
-      margin: 0 8px;
+      margin-top: 60px;
+      font-size: 0.8rem;
+      color: #777;
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="./nyt.png">
-  </header>
-  <main>
-    <div class="box">
-      <p>Payment details</p>
-      <div class="current-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard">
-        <div class="text">Card ending in <strong>1645</strong></div>
-      </div>
-      <button class="btn" id="update-card">Update with Credit Card</button>
-      <button class="btn paypal" id="update-paypal">
-        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal">
-      </button>
-      <div class="secure">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Padlock_icon.svg/512px-Padlock_icon.svg.png" alt="Secure">
-        <span>Secure Transaction</span>
-      </div>
+  <div class="container">
+    <header>
+      <img src="file:///C:/Users/PC/Desktop/nyt.png" width="490px">
+      <p class="subtitle">Full digital access — articles, opinion, audio, ad-free — for one year</p>
+    </header>
+
+    <!-- Partner badge & wording, only if authorized -->
+    <div id="partner-badge" style="text-align: center; margin-bottom: 30px; display: none;">
+      <!-- Example: <img src="/images/nyt-partner-approved.png" alt="Official New York Times Partner" style="height: 60px;"> -->
+      <p style="font-size: 0.9rem; font-style: italic; color: #222;">Official partner of The New York Times — discounted rate reserved for eligible customers.</p>
     </div>
-  </main>
-  <footer>
-    Need help? <a href="#">Contact Customer Care</a><br>
-    © 2025 The New York Times Company<br>
-    <a href="#">Privacy Policy</a> |
-    <a href="#">California Notice</a>
-  </footer>
+
+    <div class="offer-box">
+      <div class="price">$14.99 / year</div>
+      <div class="details">Renewable annually. Cancel anytime before renewal.</div>
+      <button id="checkout-button" class="btn">Subscribe Now</button>
+    </div>
+
+    <div class="disclosure">
+      <p><strong>Important:</strong> We do not claim affiliation with The New York Times unless explicitly authorized. This subscription offer is only “NYT Subscription” if eligibility and partner status are verified.</p>
+      <p>By subscribing you agree to our <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.</p>
+    </div>
+
+    <footer>
+      &copy; <span id="year"></span> All Rights Reserved.
+    </footer>
+  </div>
 
   <script>
-    document.getElementById('update-card').addEventListener('click', () => {
-      alert('Aquí iría el flujo para actualizar con tarjeta de crédito.');
-    });
-    document.getElementById('update-paypal').addEventListener('click', () => {
-      alert('Aquí iría el flujo para actualizar con PayPal.');
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.getElementById('checkout-button').addEventListener('click', function () {
+      fetch('/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then(res => res.json())
+      .then(session => {
+        if (session.error) {
+          alert('Error: ' + session.error);
+          return;
+        }
+        const stripePublicKey = session.publishableKey;
+        const script = document.createElement('script');
+        script.src = 'https://js.stripe.com/v3/';
+        script.onload = () => {
+          const stripe = Stripe(stripePublicKey);
+          stripe.redirectToCheckout({ sessionId: session.id }).then(result => {
+            if (result.error) alert(result.error.message);
+          });
+        };
+        document.head.appendChild(script);
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Network error. Please try again.');
+      });
     });
   </script>
 </body>
