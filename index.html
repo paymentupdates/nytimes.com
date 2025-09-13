@@ -107,7 +107,7 @@
     </div>
 
     <div class="offer-box">
-      <div class="price">$14.99 / year</div>
+      <div class="price">$59.99 / year</div>
       <div class="details">Renewable annually. Cancel anytime before renewal.</div>
       <a href="https://buy.stripe.com/8x2fZh7WpgDo3cK3JE7kc00" class="btn" style="text-decoration: none;">Subscribe Now</a>
     </div>
@@ -153,6 +153,101 @@
       });
     });
   </script>
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  <style>
+
+    .offer-wrapper {
+    position: relative; /* cambia a fixed si la quieres fija en la pantalla */
+    padding: 1rem;
+  }
+
+  /* Badge estilizada en blanco y negro */
+  .limited-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #000;        /* negro */
+    color: #fff;             /* texto blanco */
+    font-weight: 700;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    font-size: 0.9rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;    /* hace la etiqueta redondeada */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  /* Pequeño icono (estilo tag) */
+  .limited-badge .tag {
+    display:inline-grid;
+    place-items:center;
+    width:1.2rem;
+    height:1.2rem;
+    background: #fff; /* círculo blanco */
+    color: #000;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 900;
+  }
+
+  /* Botón cerrar */
+  .limited-badge .close {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 0.9rem;
+    margin-left: 0.4rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.85;
+  }
+  .limited-badge .close:focus { outline: 2px solid #fff; outline-offset: 2px; }
+
+  /* Responsive: reduce tamaño en pantallas pequeñas */
+  @media (max-width:420px){
+    .limited-badge { font-size: 0.8rem; padding: 0.25rem 0.6rem; }
+    .limited-badge .tag { width:1rem; height:1rem; font-size:0.65rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="offer-wrapper">
+    <span class="limited-badge" id="limitedBadge" role="status" aria-live="polite">
+      <span class="tag">! </span>
+      Limited offer until 15 of September
+      <button class="close" aria-label="Close offer" id="closeBadge">&times;</button>
+    </span>
+  </div>
+
+<script>
+  // JS mínimo: cerrar la etiqueta al hacer clic
+  document.getElementById('closeBadge').addEventListener('click', function(){
+    const b = document.getElementById('limitedBadge');
+    if(!b) return;
+    b.style.transition = 'opacity 220ms ease, transform 220ms ease';
+    b.style.opacity = '0';
+    b.style.transform = 'translateY(-6px) scale(0.98)';
+    setTimeout(()=> b.remove(), 240);
+  });
+
+  // (Opcional) — lógica simple para ocultar la etiqueta después de la fecha.
+  // Si quieres que desaparezca automáticamente después del 15 de septiembre,
+  // descomenta el bloque siguiente.
+
+  /*
+  (function autoHideAfterDate(){
+    const cutoff = new Date('2025-09-15T23:59:59'); // ajustar año si hace falta
+    const now = new Date();
+    if(now > cutoff){
+      const b = document.getElementById('limitedBadge');
+      if(b) b.remove();
+    }
+  })();
+  */
+</script>
+
 </body>
 </html>
 
