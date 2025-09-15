@@ -58,6 +58,84 @@
   }
 </style>
 </head>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Promo Label</title>
+  <style>
+    .promo-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #ff3b3b, #ff9900);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      font-family: Arial, sans-serif;
+      margin: 10px;
+      border: 2px solid #fff;
+      text-transform: uppercase;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 10px rgba(255,0,0,0.7); }
+      50% { transform: scale(1.08); box-shadow: 0 0 20px rgba(255,153,0,0.9); }
+      100% { transform: scale(1); box-shadow: 0 0 10px rgba(255,0,0,0.7); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="promo-badge" id="promo">Just 23 left</div>
+
+  <script>
+    const promo = document.getElementById("promo");
+    const START_COUNT = 23;
+    const INTERVAL = 60000; // 1 minute
+
+    // Load saved values
+    let savedData = JSON.parse(localStorage.getItem("promoCounter")) || {
+      count: START_COUNT,
+      lastUpdate: Date.now()
+    };
+
+    // Calculate elapsed minutes since last update
+    let elapsed = Math.floor((Date.now() - savedData.lastUpdate) / INTERVAL);
+    if (elapsed > 0) {
+      savedData.count = Math.max(1, savedData.count - elapsed);
+      savedData.lastUpdate = Date.now();
+    }
+
+    // Update display
+    function updateDisplay() {
+      promo.textContent = savedData.count > 1
+        ? `Just ${savedData.count} left`
+        : "Last one!";
+    }
+    updateDisplay();
+
+    // Save state
+    function saveState() {
+      localStorage.setItem("promoCounter", JSON.stringify(savedData));
+    }
+
+    // Run every minute
+    setInterval(() => {
+      if (savedData.count > 1) {
+        savedData.count--;
+        savedData.lastUpdate = Date.now();
+        updateDisplay();
+        saveState();
+      }
+    }, INTERVAL);
+
+    // Save on unload
+    window.addEventListener("beforeunload", saveState);
+  </script>
+
+ 
 <center>
 <body>
   <div class="offer-wrapper">
@@ -190,6 +268,7 @@
     }
   </style>
 </head>
+ 
 <body>
   <div class="container">
     <header>
