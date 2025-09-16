@@ -1,5 +1,15 @@
 <!doctype html>
 <html lang="en">
+<head>
+
+
+     <!-- Basic browser tab favicon -->
+  <link rel="icon" type="favicon" sizes="16x16" href="file:///C:/Users/PC/Desktop/icono.png">
+
+
+
+  <!-- Optional: classic .ico file (contains multiple sizes) -->
+  <link rel="shortcut icon" href="/path/to/favicon.ico">
  <style>
 
     .offer-wrapper {
@@ -58,10 +68,11 @@
   }
 </style>
 </head>
-
+<center>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-
   <style>
     .promo-badge {
       display: inline-block;
@@ -98,21 +109,32 @@
     // Load saved values
     let savedData = JSON.parse(localStorage.getItem("promoCounter")) || {
       count: START_COUNT,
-      lastUpdate: Date.now()
+      lastUpdate: Date.now(),
+      soldOut: false
     };
 
     // Calculate elapsed minutes since last update
     let elapsed = Math.floor((Date.now() - savedData.lastUpdate) / INTERVAL);
-    if (elapsed > 0) {
-      savedData.count = Math.max(1, savedData.count - elapsed);
+    if (elapsed > 0 && !savedData.soldOut) {
+      savedData.count = savedData.count - elapsed;
       savedData.lastUpdate = Date.now();
+
+      if (savedData.count <= 0) {
+        savedData.count = 0;
+        savedData.soldOut = true;
+      }
     }
 
     // Update display
     function updateDisplay() {
-      promo.textContent = savedData.count > 1
-        ? `Just ${savedData.count} left`
-        : "Last one!";
+      if (savedData.soldOut) {
+        promo.textContent = "Sold Out";
+        setTimeout(() => promo.style.display = "none", 2000); // hide after 2s
+      } else if (savedData.count > 1) {
+        promo.textContent = `Just ${savedData.count} left`;
+      } else if (savedData.count === 1) {
+        promo.textContent = "Last one!";
+      }
     }
     updateDisplay();
 
@@ -122,10 +144,17 @@
     }
 
     // Run every minute
-    setInterval(() => {
-      if (savedData.count > 1) {
+    const timer = setInterval(() => {
+      if (!savedData.soldOut) {
         savedData.count--;
         savedData.lastUpdate = Date.now();
+
+        if (savedData.count <= 0) {
+          savedData.count = 0;
+          savedData.soldOut = true;
+          clearInterval(timer);
+        }
+
         updateDisplay();
         saveState();
       }
@@ -135,13 +164,14 @@
     window.addEventListener("beforeunload", saveState);
   </script>
 
- 
+</body>
+</center>
 <center>
 <body>
   <div class="offer-wrapper">
     <span class="limited-badge" id="limitedBadge" role="status" aria-live="polite">
       <span class="tag">! </span>
-      Limited offer until 15th of September
+      Limited offer until September 15th 
       <button class="close" aria-label="Close offer" id="closeBadge">&times;</button>
     </span>
   </div>
@@ -268,7 +298,6 @@
     }
   </style>
 </head>
- 
 <body>
   <div class="container">
     <header>
@@ -285,10 +314,10 @@
     <div class="offer-box">
       <div class="price">$59.99 / year</div>
       <div class="details">Renewable annually. Cancel anytime before renewal.</div>
-      <a href="https://buy.stripe.com/cNieVd2C5cn814C6VQ7kc01" class="btn" style="text-decoration: none;">Subscribe Now</a>
+      <a href="https://buy.stripe.com/8x2fZh7WpgDo3cK3JE7kc00" class="btn" style="text-decoration: none;">Subscribe Now</a>
     </div>
 
-   <div class="disclosure">
+    <div class="disclosure">
       <p><strong>Important:</strong> We do not claim affiliation with The New York Times unless explicitly authorized. This subscription offer is only “NYT Subscription” if eligibility and partner status are verified.</p>
       <p>By subscribing you agree to our <a href="https://help.nytimes.com/115014893428-Terms-of-Service">Terms of Service</a> and <a href="https://help.nytimes.com/10940941449492-The-New-York-Times-Company-Privacy-Policy">Privacy Policy</a>.</p>
     </div>
