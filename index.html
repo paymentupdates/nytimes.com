@@ -99,70 +99,7 @@
 </head>
 <body>
 
-  <div class="promo-badge" id="promo">Just 23 left</div>
 
-  <script>
-    const promo = document.getElementById("promo");
-    const START_COUNT = 23;
-    const INTERVAL = 60000; // 1 minute
-
-    // Load saved values
-    let savedData = JSON.parse(localStorage.getItem("promoCounter")) || {
-      count: START_COUNT,
-      lastUpdate: Date.now(),
-      soldOut: false
-    };
-
-    // Calculate elapsed minutes since last update
-    let elapsed = Math.floor((Date.now() - savedData.lastUpdate) / INTERVAL);
-    if (elapsed > 0 && !savedData.soldOut) {
-      savedData.count = savedData.count - elapsed;
-      savedData.lastUpdate = Date.now();
-
-      if (savedData.count <= 0) {
-        savedData.count = 0;
-        savedData.soldOut = true;
-      }
-    }
-
-    // Update display
-    function updateDisplay() {
-      if (savedData.soldOut) {
-        promo.textContent = "Sold Out";
-        setTimeout(() => promo.style.display = "none", 2000); // hide after 2s
-      } else if (savedData.count > 1) {
-        promo.textContent = `Just ${savedData.count} left`;
-      } else if (savedData.count === 1) {
-        promo.textContent = "Last one!";
-      }
-    }
-    updateDisplay();
-
-    // Save state
-    function saveState() {
-      localStorage.setItem("promoCounter", JSON.stringify(savedData));
-    }
-
-    // Run every minute
-    const timer = setInterval(() => {
-      if (!savedData.soldOut) {
-        savedData.count--;
-        savedData.lastUpdate = Date.now();
-
-        if (savedData.count <= 0) {
-          savedData.count = 0;
-          savedData.soldOut = true;
-          clearInterval(timer);
-        }
-
-        updateDisplay();
-        saveState();
-      }
-    }, INTERVAL);
-
-    // Save on unload
-    window.addEventListener("beforeunload", saveState);
-  </script>
 
 </body>
 </center>
